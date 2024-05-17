@@ -40,7 +40,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 En github repository om vår projekt för kursen Flerplattformsapplikationer med webteknik. VT-24. Malmö Universitet
 
-Av Hampus Persson, Jasper Nordahl och David Radic
+Av Hampus Persson, Jazper Nordahl och David Radic
 
 
 (x) 1. Välja ramverk (React)
@@ -64,4 +64,12 @@ En annan viktig anledning till varför vi har valt React istället för andra ra
 Eftersom vi inte riktigt visste hur stort detta projektet skulle bli i slutändan så passade det bäst för oss. Dessutom så har många andra som använt
 TomTom också använt sig av React. Så de gångerna som vi fastnar på något eller behöver lära oss så finns det ett brett utbud för det.
 
+Checklista
+1. Fylla ut skärmen(kartan)
+2. Rubrik
+3. Sökfält (med "flyfunktion")
 
+4. GPS? Tid? Avstånd? Din plats?
+5. Traffikerad väg?
+6. Alternativ väg?
+7. Css, style that shajt, responsiv
