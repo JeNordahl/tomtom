@@ -5,7 +5,7 @@ import ttServices from '@tomtom-international/web-sdk-services';
 
 
 const MapTest = () => {
-    const [map, setMap] = useState(null);
+    const [themap, setMap] = useState(null);
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
 
@@ -16,9 +16,13 @@ const MapTest = () => {
             zoom: 2,
         });
 
-        setMap(map);
+        map.addControl(new tt.FullscreenControl());
+        map.addControl(new tt.NavigationControl());
+
+        setMap(themap);
 
         return () => map.remove();
+
     }, []);
 
     useEffect(() => {
@@ -60,6 +64,8 @@ const MapTest = () => {
             <div id="map" style={{ height: '500px', width: '100%' }}></div>
         </div>
     );
+
+
 };
 
 

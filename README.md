@@ -78,3 +78,9 @@ Checklista
 https://www.youtube.com/watch?v=Xwh5FyicePM&t=1977s 
 https://www.youtube.com/watch?v=sWVgMcz8Q44
 https://developer.tomtom.com/maps-sdk-web-js/documentation#ttPlugins.SearchBox
+https://developer.tomtom.com/maps-sdk-web-js/functional-examples
+https://developer.tomtom.com/blog/build-different/adding-tomtom-maps-modern-react-app/
+https://developer.tomtom.com/blog/build-different/building-responsive-location-search-component-react-search-box/#whyreact
+https://developer.tomtom.com/blog/build-different/using-tomtom-maps-react-routing/
+https://developer.tomtom.com/blog/build-different/adding-advanced-tomtom-api-features-modern-react-app/
+https://stackblitz.com/edit/react-tomtom-maps?file=src%2FApp.js
