@@ -73,3 +73,8 @@ Checklista
 5. Traffikerad väg?
 6. Alternativ väg?
 7. Css, style that shajt, responsiv
+
+
+https://www.youtube.com/watch?v=Xwh5FyicePM&t=1977s 
+https://www.youtube.com/watch?v=sWVgMcz8Q44
+https://developer.tomtom.com/maps-sdk-web-js/documentation#ttPlugins.SearchBox
