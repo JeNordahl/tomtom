@@ -35,15 +35,12 @@ const MapTest = () => {
 
             searchService.then(response => {
                 setResults(response.results);
+                console.log(results)
             });
         } else {
             setResults([]);
         }
     }, [query]);
-
-    /*return (
-        <div id="map" style={{ height: "500px", width: "100%" }}></div>
-    )*/
 
     return (
         <div>
