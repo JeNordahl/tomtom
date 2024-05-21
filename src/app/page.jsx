@@ -1,16 +1,17 @@
 "use client"
 
-import React from "react";
-import MapTest from "./components/Map";
-import SearchButton from "./components/Button"
+import React from 'react';
+import MapTest from './components/Map';
+import MyForm from './components/Form';
 
 const HomePage = () => {
+
     return (
         <div>
             <MapTest />
         </div>
-            //<SearchButton />
     );
 };
+//<MyForm />
 
 export default HomePage;
