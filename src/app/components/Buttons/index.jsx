@@ -1,34 +1,42 @@
-import MapTest from "../Map";
+import React, { useState, useEffect } from "react";
 import tt from '@tomtom-international/web-sdk-services';
 
-const Button = () => {
-
-    var moveMap = function(lnglat){
-        map.flyTo({
-            center: lnglat,
-            zoom: 14,
-        })
-    }
-
-    var handleResults = function (result) {
-        console.log(result);
-        if (result.results){
-            moveMap(result.results [0].position)
+const Button = ({ map }) => {
+    const moveMap = (lnglat) => {
+        if (map) {
+            map.flyTo({
+                center: lnglat,
+                zoom: 14,
+            });
+        } else {
+            console.error("Map instance is not available");
         }
-    }
+    };
 
-    var search = function () {  
-    
-        tt.services.fuzzySearch({
-            key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
-            query: document.getElementById("searchfunction").value,
-            
-        }).go().then(handleResults);
-    }
+    const handleResults = (result) => {
+        console.log(result);
+        if (result.results && result.results.length > 0) {
+            moveMap(result.results[0].position);
+        } else {
+            console.log("No results found");
+        }
+    };
+
+    const search = () => {
+        const query = document.getElementById("searchfunction").value;
+        if (query) {
+            tt.services.fuzzySearch({
+                key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
+                query: query,
+            }).then(handleResults).catch(err => console.error("Error with fuzzySearch:", err));
+        } else {
+            console.error("Search query is empty");
+        }
+    };
 
     return (
         <button onClick={search} className="btn btn-primary m-2">Sök stad</button>
     );
 };
 
-export default Button
+export default Button;
