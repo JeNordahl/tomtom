@@ -8,8 +8,8 @@ const HomePage = () => {
     return (
         <div>
             <MapTest />
-            <SearchButton />
         </div>
+            //<SearchButton />
     );
 };
 
