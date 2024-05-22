@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import ttServices from '@tomtom-international/web-sdk-services';
+import Button from '../Button';
 
 const MapTest = () => {
     const mapElement = useRef();
@@ -109,6 +110,7 @@ const MapTest = () => {
                 >
                     Clear
                 </button>
+                <Button map={map.current} />
             </div>
         </div>
     );

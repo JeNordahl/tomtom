@@ -3,6 +3,7 @@
 import React from 'react';
 import MapTest from './components/Map';
 import MyForm from './components/Form';
+import Button from './components/Button';
 
 const HomePage = () => {
 
@@ -13,5 +14,6 @@ const HomePage = () => {
     );
 };
 //<MyForm />
+
 
 export default HomePage;
