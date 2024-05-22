@@ -36,8 +36,8 @@ const Button = ({ map }) => {
 
     return (
         <div>
-            <input placeholder="Sök stad..." id="searchfunction"></input>
-            <button onClick={search} className="btn btn-primary m-2">Sök stad</button>
+            <input placeholder="Search City..." id="searchfunction"></input>
+            <button onClick={search} className="btn btn-primary m-2">Search City</button>
         </div>
     );
 };

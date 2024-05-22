@@ -2,58 +2,80 @@ import React, { useEffect, useRef, useState } from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import ttServices from '@tomtom-international/web-sdk-services';
-import Button from '../Button';
 
 const MapTest = () => {
     const mapElement = useRef();
     const map = useRef();
 
     const [markers, setMarkers] = useState([]);
+    const [startLocation, setStartLocation] = useState('');
+    const [endLocation, setEndLocation] = useState('');
 
-    const addMarker = (event) => {
-        if (markers.length < 2) {
-            const newMarker = new tt.Marker().setLngLat(event.lngLat).addTo(map.current);
-            setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-        }
-    }
+    const addMarker = (lngLat) => {
+        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map.current);
+        setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+    };
 
-    const createRoute = () => {
-        if (markers.length < 2) return;
-
-        const locations = markers.map(marker => marker.getLngLat());
-
-        const routeOptions = {
+    const geocodeLocation = (query) => {
+        return ttServices.services.fuzzySearch({
             key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
-            locations,
-            vehicleCommercial: true,
-            vehicleHeading: 0,
-        };
-
-        ttServices.services.calculateRoute(routeOptions).then((response) => {
-            const geojson = response.toGeoJson();
-            map.current.addLayer({
-                id: "route",
-                type: "line",
-                source: {
-                    type: "geojson",
-                    data: geojson,
-                },
-                paint: {
-                    "line-color": "#0f8ae2",
-                    "line-width": 8,
-                },
-            });
-
-            const bounds = new tt.LngLatBounds();
-            geojson.features[0].geometry.coordinates.forEach((point) => {
-                bounds.extend(tt.LngLat.convert(point));
-            });
-            map.current.fitBounds(bounds, {
-                duration: 300,
-                padding: 50,
-                maxZoom: 14,
-            });
+            query: query,
+        }).then(response => {
+            const results = response.results;
+            if (results.length > 0) {
+                return results[0].position;
+            } else {
+                throw new Error(`No results found for query "${query}"`);
+            }
         });
+    };
+
+    const createRoute = async () => {
+        try {
+            const startCoordinates = await geocodeLocation(startLocation);
+            const endCoordinates = await geocodeLocation(endLocation);
+
+            markers.forEach(marker => marker.remove());
+            setMarkers([]);
+
+            addMarker([startCoordinates.lng, startCoordinates.lat]);
+            addMarker([endCoordinates.lng, endCoordinates.lat]);
+
+            const routeOptions = {
+                key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
+                locations: [startCoordinates, endCoordinates],
+                vehicleCommercial: true,
+                vehicleHeading: 0,
+            };
+
+            ttServices.services.calculateRoute(routeOptions).then((response) => {
+                const geojson = response.toGeoJson();
+                map.current.addLayer({
+                    id: "route",
+                    type: "line",
+                    source: {
+                        type: "geojson",
+                        data: geojson,
+                    },
+                    paint: {
+                        "line-color": "#0f8ae2",
+                        "line-width": 8,
+                    },
+                });
+
+                const bounds = new tt.LngLatBounds();
+                geojson.features[0].geometry.coordinates.forEach((point) => {
+                    bounds.extend(tt.LngLat.convert(point));
+                });
+                map.current.fitBounds(bounds, {
+                    duration: 300,
+                    padding: 50,
+                    maxZoom: 14,
+                });
+            });
+        } catch (error) {
+            console.error("Error creating route:", error);
+        }
     };
 
     const clear = () => {
@@ -80,8 +102,6 @@ const MapTest = () => {
         map.current.addControl(new tt.FullscreenControl());
         map.current.addControl(new tt.NavigationControl());
 
-        map.current.on('click', addMarker);
-
         return () => {
             map.current.remove();
         };
@@ -92,64 +112,41 @@ const MapTest = () => {
         <div>
             <div className="container">
                 <div ref={mapElement} style={{ height: '500px', width: '100%' }} />
-                <button
-                    className="btn"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        createRoute();
-                    }}
-                >
-                    Calculate Route
-                </button>
-                <button
-                    className="btn"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        clear();
-                    }}
-                >
-                    Clear
-                </button>
-                <Button map={map.current} />
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Start Location"
+                        value={startLocation}
+                        onChange={(e) => setStartLocation(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="End Location"
+                        value={endLocation}
+                        onChange={(e) => setEndLocation(e.target.value)}
+                    />
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            createRoute();
+                        }}
+                    >
+                        Create Route
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            clear();
+                        }}
+                    >
+                        Clear
+                    </button>
+                </div>
             </div>
         </div>
     );
 };
 
 export default MapTest;
-
-
-/*
-
-<input
-                type="text"
-                placeholder="Search..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
-            />
-            <ul>
-                {results.map((result, index) => (
-                    <li key={index}>
-                        {result.address.freeformAddress}
-                    </li>
-                ))}
-            </ul>*/
-
-/*useEffect(() => {
-if (query.length > 2) {
-ttServices.services.fuzzySearch({
-    key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
-    query: query,
-    limit: 5,
-}).go().then(response => {
-    setResults(response.results);
-    console.log(response.results);
-}).catch(error => {
-    console.error('Error fetching search results:', error);
-    setResults([]);
-});
-} else {
-setResults([]);
-}
-}, [query]);*/
