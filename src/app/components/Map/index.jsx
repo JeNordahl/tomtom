@@ -44,7 +44,15 @@ const MapTest = () => {
 
     return (
         <div>
-            <input
+            
+            <div id="map" style={{ height: '500px', width: '100%' }}></div>
+        </div>
+    );
+
+
+};
+/*
+<input
                 type="text"
                 placeholder="Search..."
                 value={query}
@@ -57,14 +65,7 @@ const MapTest = () => {
                         {result.address.freeformAddress}
                     </li>
                 ))}
-            </ul>
-            <div id="map" style={{ height: '500px', width: '100%' }}></div>
-        </div>
-    );
-
-
-};
-
+            </ul>*/
 
 
 export default MapTest;
