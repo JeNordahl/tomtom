@@ -10,7 +10,7 @@ const MapTest = ({ map }) => {
     const [endLocation, setEndLocation] = useState('');
 
     const addMarker = (lngLat) => {
-        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map); // .current?
+        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map); 
         setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     };
 
@@ -41,8 +41,7 @@ const MapTest = ({ map }) => {
 
             const routeOptions = {
                 key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
-                //locations: [startCoordinates, endCoordinates],
-                locations: [`${startCoordinates.lng},${startCoordinates.lat}`, `${endCoordinates.lng},${endCoordinates.lat}`],
+                locations: [startCoordinates, endCoordinates],
                 vehicleCommercial: true,
                 vehicleHeading: 0,
             };
