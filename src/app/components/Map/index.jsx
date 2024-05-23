@@ -1,18 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
+import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
-import ttServices from '@tomtom-international/web-sdk-services';
 
-const MapTest = () => {
-    const mapElement = useRef();
-    const map = useRef();
 
+const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
     const [startLocation, setStartLocation] = useState('');
     const [endLocation, setEndLocation] = useState('');
 
     const addMarker = (lngLat) => {
-        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map.current);
+        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map); // .current?
         setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     };
 
@@ -43,14 +41,15 @@ const MapTest = () => {
 
             const routeOptions = {
                 key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
-                locations: [startCoordinates, endCoordinates],
+                //locations: [startCoordinates, endCoordinates],
+                locations: [`${startCoordinates.lng},${startCoordinates.lat}`, `${endCoordinates.lng},${endCoordinates.lat}`],
                 vehicleCommercial: true,
                 vehicleHeading: 0,
             };
 
             ttServices.services.calculateRoute(routeOptions).then((response) => {
                 const geojson = response.toGeoJson();
-                map.current.addLayer({
+                map.addLayer({
                     id: "route",
                     type: "line",
                     source: {
@@ -67,7 +66,7 @@ const MapTest = () => {
                 geojson.features[0].geometry.coordinates.forEach((point) => {
                     bounds.extend(tt.LngLat.convert(point));
                 });
-                map.current.fitBounds(bounds, {
+                map.fitBounds(bounds, {
                     duration: 300,
                     padding: 50,
                     maxZoom: 14,
@@ -85,65 +84,45 @@ const MapTest = () => {
     };
 
     const removeRoute = (id) => {
-        if (map.current.getLayer(id)) {
-            map.current.removeLayer(id);
-            map.current.removeSource(id);
+        if (map.getLayer(id)) {
+            map.removeLayer(id);
+            map.removeSource(id);
         }
     };
 
-    useEffect(() => {
-        map.current = tt.map({
-            key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
-            container: mapElement.current,
-            center: [4.91191, 59.36619],
-            zoom: 2,
-        });
-
-        map.current.addControl(new tt.FullscreenControl());
-        map.current.addControl(new tt.NavigationControl());
-
-        return () => {
-            map.current.remove();
-        };
-
-    }, []);
-
     return (
         <div>
-            <div className="container">
-                <div ref={mapElement} style={{ height: '500px', width: '100%' }} />
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Start Location"
-                        value={startLocation}
-                        onChange={(e) => setStartLocation(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="End Location"
-                        value={endLocation}
-                        onChange={(e) => setEndLocation(e.target.value)}
-                    />
-                    <button
-                        className="btn"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            createRoute();
-                        }}
-                    >
-                        Create Route
-                    </button>
-                    <button
-                        className="btn"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            clear();
-                        }}
-                    >
-                        Clear
-                    </button>
-                </div>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Start Location"
+                    value={startLocation}
+                    onChange={(e) => setStartLocation(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="End Location"
+                    value={endLocation}
+                    onChange={(e) => setEndLocation(e.target.value)}
+                />
+                <button
+                    className="btn"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        createRoute();
+                    }}
+                >
+                    Create Route
+                </button>
+                <button
+                    className="btn"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        clear();
+                    }}
+                >
+                    Clear
+                </button>
             </div>
         </div>
     );

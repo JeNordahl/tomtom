@@ -1,5 +1,5 @@
 import React from "react";
-import tt from '@tomtom-international/web-sdk-services';
+import ttServices from '@tomtom-international/web-sdk-services';
 
 const Button = ({ map }) => {
     const moveMap = (lnglat) => {
@@ -25,7 +25,7 @@ const Button = ({ map }) => {
     const search = () => {
         const query = document.getElementById("searchfunction").value;
         if (query) {
-            tt.services.fuzzySearch({
+            ttServices.services.fuzzySearch({
                 key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
                 query: query,
             }).then(handleResults).catch(err => console.error("Error with fuzzySearch:", err));
@@ -36,7 +36,6 @@ const Button = ({ map }) => {
 
     return (
         <div>
-            <input placeholder="Search City..." id="searchfunction"></input>
             <button onClick={search} className="btn btn-primary m-2">Search City</button>
         </div>
     );

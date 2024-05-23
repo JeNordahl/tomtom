@@ -1,39 +1,48 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import tt from '@tomtom-international/web-sdk-maps';
+import React, { useRef, useEffect, useState} from "react";
 import MapTest from "./components/Map";
+import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
 import Button from "./components/Buttons";
 
 const HomePage = () => {
-    const [map, setMap] = useState(null);
+    const mapElement =  useRef(null);
+    const map = useRef(null);
+    const [mapReady, setMapReady] = useState(false);
 
     useEffect(() => {
-        const apiKey = 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU'; // API-nyckel
-        const latitude = 40.730610; // Malmö's latitude
-        const longitude = -73.935242; // Malmö's longitude
-
-        const mapInstance = tt.map({
-            key: apiKey,
-            container: 'map',
-            center: [longitude, latitude],
-            zoom: 10
+        map.current = tt.map({
+            key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
+            container: mapElement.current,
+            center: [40.730610, -73.935242],
+            zoom: 2,
         });
 
-        setMap(mapInstance);
+        map.current.addControl(new tt.FullscreenControl());
+        map.current.addControl(new tt.NavigationControl());
 
-        return () => mapInstance.remove();
+        map.current.on('load', () => {
+            setMapReady(true);
+        });
+
+        return () => {
+            if (map.current) {
+                map.current.remove();
+            }
+        };
+
     }, []);
 
     return (
         <div>
             <h1>Traffic Locator</h1>
             <input placeholder="Sök stad..." id="searchfunction"></input>
-            <Button map={map} />
-            <MapTest map={map} />
+            <Button map={map.current}/>
+            <div ref={mapElement} style={{ height: '500px', width: '100%' }} />
+            <MapTest map={map.current}/>
         </div>
-            //<SearchButton />
+        //<SearchButton />
     );
 };
 //<MyForm />
