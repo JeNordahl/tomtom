@@ -65,9 +65,7 @@ Eftersom vi inte riktigt visste hur stort detta projektet skulle bli i slutända
 TomTom också använt sig av React. Så de gångerna som vi fastnar på något eller behöver lära oss så finns det ett brett utbud för det.
 
 Checklista
-1. Fylla ut skärmen(kartan)
-2. Rubrik
-3. Sökfält (med "flyfunktion")
+1. Sökfält (med "flyfunktion")
 
 4. GPS? Tid? Avstånd? Din plats?
 5. Traffikerad väg?
@@ -84,3 +82,7 @@ https://developer.tomtom.com/blog/build-different/building-responsive-location-s
 https://developer.tomtom.com/blog/build-different/using-tomtom-maps-react-routing/
 https://developer.tomtom.com/blog/build-different/adding-advanced-tomtom-api-features-modern-react-app/
 https://stackblitz.com/edit/react-tomtom-maps?file=src%2FApp.js
+2. GPS? Tid? Avstånd? Din plats?
+3. Traffikerad väg?
+4. Alternativ väg?
+5. Css, style that shajt, responsiv
