@@ -81,6 +81,8 @@ const MapTest = ({ map }) => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
         removeRoute('route');
+        setStartLocation('');  // Tömmer start location input
+        setEndLocation('');    // Tömmer end location input
     };
 
     const removeRoute = (id) => {
