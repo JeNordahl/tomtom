@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import MapTest from "./components/Map";
 import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
 import Button from "./components/Button";
 
 const HomePage = () => {
-    const mapElement =  useRef(null);
+    const mapElement = useRef(null);
     const map = useRef(null);
     const [mapReady, setMapReady] = useState(false);
 
     useEffect(() => {
+
         map.current = tt.map({
             key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
             container: mapElement.current,

@@ -48,9 +48,11 @@ Av Hampus Persson, Jazper Nordahl och David Radic
 (x) 3. Välja API: Vi har valt att använda oss av TomTom:s trafik-API och kart-API. Där vi kan mäta trafikflödet på angivna kordinater. VI har fokuserat på Malmö då vi alla 3 bor samt studerar där. 
       Med hjälp av TomTom så kan vi mäta genomsnittliga hastigheten, trafikflödet, om vägar är avstängda och så vidare.
 () 4. Kunna spara data
-() 5. Ska ha ett grafiskt gränssnitt men fokus på användbarhet
+(x) 5. Ska ha ett grafiskt gränssnitt men fokus på användbarhet
 (x) 6. Använda oss av git
 (x) 7. Skapa en README fil
+()  8. Css, style that shajt, responsiv
+()  9. Lägga till kommentarer i vår kod då vi har väldigt mycket just nu som är oklart
 
 
 
@@ -79,7 +81,3 @@ https://developer.tomtom.com/blog/build-different/building-responsive-location-s
 https://developer.tomtom.com/blog/build-different/using-tomtom-maps-react-routing/
 https://developer.tomtom.com/blog/build-different/adding-advanced-tomtom-api-features-modern-react-app/
 https://stackblitz.com/edit/react-tomtom-maps?file=src%2FApp.js
-2. GPS? Tid? Avstånd? Din plats?
-3. Traffikerad väg?
-4. Alternativ väg?
-5. Css, style that shajt, responsiv

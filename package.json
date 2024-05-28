@@ -12,6 +12,7 @@
     "@tomtom-international/web-sdk-maps": "^6.25.0",
     "@tomtom-international/web-sdk-services": "^6.25.0",
     "axios": "^1.7.1",
+    "js-cookie": "^3.0.5",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"
