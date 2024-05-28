@@ -43,18 +43,6 @@ En github repository om vår projekt för kursen Flerplattformsapplikationer med
 Av Hampus Persson, Jazper Nordahl och David Radic
 
 
-(x) 1. Välja ramverk (React)
-(x) 2. Motivera val av ramverk
-(x) 3. Välja API: Vi har valt att använda oss av TomTom:s trafik-API och kart-API. Där vi kan mäta trafikflödet på angivna kordinater. VI har fokuserat på Malmö då vi alla 3 bor samt studerar där. 
-      Med hjälp av TomTom så kan vi mäta genomsnittliga hastigheten, trafikflödet, om vägar är avstängda och så vidare.
-() 4. Kunna spara data
-(x) 5. Ska ha ett grafiskt gränssnitt men fokus på användbarhet
-(x) 6. Använda oss av git
-(x) 7. Skapa en README fil
-()  8. Css, style that shajt, responsiv
-()  9. Lägga till kommentarer i vår kod då vi har väldigt mycket just nu som är oklart
-
-
 
 
 # Motivering till val av ramverk
