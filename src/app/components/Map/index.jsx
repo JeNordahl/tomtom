@@ -3,17 +3,21 @@ import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
+
+// Huvudfunktionen för vår kära karta.
 const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
     const [startLocation, setStartLocation] = useState('');
     const [endLocation, setEndLocation] = useState('');
 
+    // Lägger till markörer i form av flaggor på kartan.
     const addMarker = (lngLat) => {
         const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map);
         setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     };
 
-    const geocodeLocation = (query) => {
+    // Tar fram resultatet från sökfälten och söker genom TomTom:s "fuzzysearch".
+    const routeSearch = (query) => {
         return ttServices.services.fuzzySearch({
             key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
             query: query,
@@ -27,10 +31,11 @@ const MapTest = ({ map }) => {
         });
     };
 
+    // TomTom:s route funktion som söker efter 2 angivna ställen och skapar en route till användaren.
     const createRoute = async () => {
         try {
-            const startCoordinates = await geocodeLocation(startLocation);
-            const endCoordinates = await geocodeLocation(endLocation);
+            const startCoordinates = await routeSearch(startLocation);
+            const endCoordinates = await routeSearch(endLocation);
 
             markers.forEach(marker => marker.remove());
             setMarkers([]);
@@ -38,6 +43,7 @@ const MapTest = ({ map }) => {
             addMarker([startCoordinates.lng, startCoordinates.lat]);
             addMarker([endCoordinates.lng, endCoordinates.lat]);
 
+            // Inställningar till routefunktionen via TomTom:s API.
             const routeOptions = {
                 key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
                 locations: [startCoordinates, endCoordinates],
@@ -45,6 +51,7 @@ const MapTest = ({ map }) => {
                 vehicleHeading: 0,
             };
 
+            // Skapar linjen samt dess utseende för rutten.
             ttServices.services.calculateRoute(routeOptions).then((response) => {
                 const geojson = response.toGeoJson();
                 map.addLayer({
@@ -60,6 +67,7 @@ const MapTest = ({ map }) => {
                     },
                 });
 
+                // Zoomar in eller ut baserat på hur lång rout:en är för ett mer användarvänligt användande.
                 const bounds = new tt.LngLatBounds();
                 geojson.features[0].geometry.coordinates.forEach((point) => {
                     bounds.extend(tt.LngLat.convert(point));
@@ -76,6 +84,7 @@ const MapTest = ({ map }) => {
         }
     };
 
+    // Knapp som gör att man kan ta bort markörerna (tömmer listan).
     const clear = () => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
@@ -84,6 +93,7 @@ const MapTest = ({ map }) => {
         setEndLocation('');    
     };
 
+    // Knapp som gör att man kan ta bort rutten (tömmer listan).
     const removeRoute = (id) => {
         if (map.getLayer(id)) {
             map.removeLayer(id);
@@ -91,18 +101,19 @@ const MapTest = ({ map }) => {
         }
     };
 
+    // Returnerar alla värde i form av utskrift.
     return (
         <div>
             <div>
                 <input
                     type="text"
-                    placeholder="Start Location"
+                    placeholder="Start..."
                     value={startLocation}
                     onChange={(e) => setStartLocation(e.target.value)}
                 />
                 <input
                     type="text"
-                    placeholder="End Location"
+                    placeholder="Slut..."
                     value={endLocation}
                     onChange={(e) => setEndLocation(e.target.value)}
                 />
@@ -113,7 +124,7 @@ const MapTest = ({ map }) => {
                         createRoute();
                     }}
                 >
-                    Create Route
+                    Skapa rutt
                 </button>
                 <button
                     className="btn"
@@ -122,7 +133,7 @@ const MapTest = ({ map }) => {
                         clear();
                     }}
                 >
-                    Clear
+                    Rensa
                 </button>
             </div>
         </div>

@@ -38,7 +38,7 @@ const HomePage = () => {
         <div>
             <div ref={mapElement} id="map"></div>
             <div className="container">
-                <h1>Traffic Locator</h1>
+                <h1>Where am I?</h1>
                 <input placeholder="Sök stad..." id="searchfunction" />
                 <Button map={map.current} />
                 {mapReady && <MapTest map={map.current} />}

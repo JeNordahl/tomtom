@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ttServices from '@tomtom-international/web-sdk-services';
 
+
+// Huvudfunktionen för våra knappar i appen
 const Button = ({ map }) => {
     const [searches, setSearches] = useState([]);
 
+    // Skapar en variabel (key) för localstorage under namnet "stad".
     useEffect(() => {
         const savedSearches = localStorage.getItem('stad');
         if (savedSearches) {
@@ -11,6 +14,7 @@ const Button = ({ map }) => {
         }
     }, []);
 
+    // TomTom funktion som gör att man på ett snyggt sätt flyger till den stad man sökt på.
     const moveMap = (lnglat) => {
         if (map) {
             map.flyTo({
@@ -22,6 +26,7 @@ const Button = ({ map }) => {
         }
     };
 
+    // Hanterar resultatet från sökningen och "flyger" sedan till staden genom funktionen moveMap.
     const handleResults = (result) => {
         if (result.results && result.results.length > 0) {
             moveMap(result.results[0].position);
@@ -30,6 +35,7 @@ const Button = ({ map }) => {
         }
     };
 
+    // Sökfunktion som kollar ifall något är inskrivet i fältet, om inte får man upp felmeddelande. 
     const search = (query) => {
         if (!query) {
             query = document.getElementById("searchfunction").value;
@@ -47,6 +53,7 @@ const Button = ({ map }) => {
         }
     };
 
+    // Sparar sökningen och slänger in den i en lista genom local storage.
     const saveSearch = (query) => {
         let updatedSearches = [...searches];
         if (!updatedSearches.includes(query)) {
@@ -56,6 +63,7 @@ const Button = ({ map }) => {
         }
     };
 
+    // Om man trycker på en tidigare sökning så körs search funktionen med tidigare stad.
     const handleSelectSearch = (query) => {
         document.getElementById("searchfunction").value = query;
         search(query);
@@ -63,12 +71,12 @@ const Button = ({ map }) => {
 
     return (
         <div>
-            <button onClick={() => search()} className="btn btn-primary m-2">Search City</button>
+            <button onClick={() => search()} className="btn btn-primary m-2">Sök plats</button>
             <div>
-                <h3>Recent Searches:</h3>
+                <h3>Tidigare sökningar:</h3>
                 <ul>
                     {searches.map((search, index) => (
-                        <li key={index} onClick={() => handleSelectSearch(search)} style={{ cursor: 'pointer', color: 'blue' }}>
+                        <li class="recentsearch" key={index} onClick={() => handleSelectSearch(search)}>
                             {search}
                         </li>
                     ))}
