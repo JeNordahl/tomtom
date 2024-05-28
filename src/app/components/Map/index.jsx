@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
-import Cookies from 'js-cookie';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 const MapTest = ({ map }) => {
@@ -71,10 +70,6 @@ const MapTest = ({ map }) => {
                     maxZoom: 14,
                 });
 
-                Cookies.set('lastRoute', JSON.stringify({
-                    start: startCoordinates,
-                    end: endCoordinates,
-                }), { expires: 7 });
             });
         } catch (error) {
             console.error("Error creating route:", error);
@@ -85,8 +80,8 @@ const MapTest = ({ map }) => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
         removeRoute('route');
-        setStartLocation('');  // Tömmer start location input
-        setEndLocation('');    // Tömmer end location input
+        setStartLocation('');  
+        setEndLocation('');    
     };
 
     const removeRoute = (id) => {
