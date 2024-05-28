@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState} from "react";
 import MapTest from "./components/Map";
 import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
-import Button from "./components/Buttons";
+import Button from "./components/Button";
 
 const HomePage = () => {
     const mapElement =  useRef(null);
