@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import MapTest from "./components/Map";
 import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
 import Button from "./components/Button";
 
 const HomePage = () => {
-    const mapElement =  useRef(null);
+    const mapElement = useRef(null);
     const map = useRef(null);
     const [mapReady, setMapReady] = useState(false);
 
     useEffect(() => {
+
         map.current = tt.map({
             key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
             container: mapElement.current,
@@ -38,14 +39,11 @@ const HomePage = () => {
         <div>
             <h1>Traffic Locator</h1>
             <input placeholder="Sök stad..." id="searchfunction"></input>
-            <Button map={map.current}/>
+            <Button map={map.current} />
             <div ref={mapElement} style={{ height: '500px', width: '100%' }} />
-            <MapTest map={map.current}/>
+            <MapTest map={map.current} />
         </div>
-        //<SearchButton />
     );
 };
-//<MyForm />
-
 
 export default HomePage;

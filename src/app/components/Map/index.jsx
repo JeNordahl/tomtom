@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
+import Cookies from 'js-cookie';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
-
 
 const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
@@ -10,7 +10,7 @@ const MapTest = ({ map }) => {
     const [endLocation, setEndLocation] = useState('');
 
     const addMarker = (lngLat) => {
-        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map); // .current?
+        const newMarker = new tt.Marker().setLngLat(lngLat).addTo(map);
         setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     };
 
@@ -41,7 +41,6 @@ const MapTest = ({ map }) => {
 
             const routeOptions = {
                 key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
-                //locations: [startCoordinates, endCoordinates],
                 locations: [`${startCoordinates.lng},${startCoordinates.lat}`, `${endCoordinates.lng},${endCoordinates.lat}`],
                 vehicleCommercial: true,
                 vehicleHeading: 0,
@@ -71,6 +70,11 @@ const MapTest = ({ map }) => {
                     padding: 50,
                     maxZoom: 14,
                 });
+
+                Cookies.set('lastRoute', JSON.stringify({
+                    start: startCoordinates,
+                    end: endCoordinates,
+                }), { expires: 7 });
             });
         } catch (error) {
             console.error("Error creating route:", error);
@@ -81,6 +85,7 @@ const MapTest = ({ map }) => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
         removeRoute('route');
+        Cookies.remove('lastRoute');
     };
 
     const removeRoute = (id) => {
