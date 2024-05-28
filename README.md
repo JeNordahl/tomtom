@@ -65,19 +65,3 @@ Att börja lära sig ett nytt ramverk samtidigt som vi ska genomföra ett projek
 En annan viktig anledning till varför vi har valt React istället för andra ramverk är för att React erbjuder hög flexibilitet och skalbarhet. 
 Eftersom vi inte riktigt visste hur stort detta projektet skulle bli i slutändan så passade det bäst för oss. Dessutom så har många andra som använt
 TomTom också använt sig av React. Så de gångerna som vi fastnar på något eller behöver lära oss så finns det ett brett utbud för det.
-
-Checklista
-5. Traffikerad väg?
-6. Alternativ väg?
-7. Css, style that shajt, responsiv
-
-
-https://www.youtube.com/watch?v=Xwh5FyicePM&t=1977s 
-https://www.youtube.com/watch?v=sWVgMcz8Q44
-https://developer.tomtom.com/maps-sdk-web-js/documentation#ttPlugins.SearchBox
-https://developer.tomtom.com/maps-sdk-web-js/functional-examples
-https://developer.tomtom.com/blog/build-different/adding-tomtom-maps-modern-react-app/
-https://developer.tomtom.com/blog/build-different/building-responsive-location-search-component-react-search-box/#whyreact
-https://developer.tomtom.com/blog/build-different/using-tomtom-maps-react-routing/
-https://developer.tomtom.com/blog/build-different/adding-advanced-tomtom-api-features-modern-react-app/
-https://stackblitz.com/edit/react-tomtom-maps?file=src%2FApp.js
