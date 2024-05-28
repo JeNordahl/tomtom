@@ -1,43 +1,24 @@
-#map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.container {
-    position: absolute;
-    top: 5%;
-    left: 33%;
-    text-align: center; 
-    padding: 10px;
-    border-radius: 4px;
+body {
+    margin-top: 75px;
+    background-color: white;
+    overflow: hidden;
 }
 
 h1 {
-    font-size: x-large;
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 input {
-    margin: 5px;
-    padding: 5px;
-    font-size: medium;
-    border: 1px solid;
-    border-radius: 4px;
+    margin-left: 45%;
+    height: 30px;
+    width: 10%;
+    margin-bottom: 50px;
+    border-radius: 6px;
 }
 
-.btn {
-    padding: 5px 10px;
-    margin: 5px;
-    font-size: medium;
-    color: white;
-    background-color: #118be2;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+#map {
+    height: 1100px;
+    width: 100%;
 }
 
-.btn:hover {
-    background-color: #1279c2;
-}
