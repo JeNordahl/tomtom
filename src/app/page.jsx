@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState} from "react";
 import MapTest from "./components/Map";
 import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
-import Button from "./components/Buttons";
+import Button from "./components/Button";
 
 const HomePage = () => {
     const mapElement =  useRef(null);
@@ -19,7 +19,6 @@ const HomePage = () => {
             zoom: 2,
         });
 
-        map.current.addControl(new tt.FullscreenControl());
         map.current.addControl(new tt.NavigationControl());
 
         map.current.on('load', () => {
@@ -36,16 +35,15 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Traffic Locator</h1>
-            <input placeholder="Sök stad..." id="searchfunction"></input>
-            <Button map={map.current}/>
-            <div ref={mapElement} style={{ height: '500px', width: '100%' }} />
-            <MapTest map={map.current}/>
+            <div ref={mapElement} id="map"></div>
+            <div className="container">
+                <h1>Traffic Locator</h1>
+                <input placeholder="Sök stad..." id="searchfunction" />
+                <Button map={map.current} />
+                {mapReady && <MapTest map={map.current} />}
+            </div>
         </div>
-        //<SearchButton />
     );
 };
-//<MyForm />
-
 
 export default HomePage;
