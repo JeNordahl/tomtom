@@ -11,27 +11,39 @@ const MapTest = ({ map }) => {
     const [endLocation, setEndLocation] = useState('');
     const [trafficFlowVisible, setTrafficFlowVisible] = useState(false);
     const [trafficIncidentsVisible, setTrafficIncidentsVisible] = useState(false);
+    const [searches, setSearches] = useState([]);
 
-    useEffect(() => {
-        if (map) {
+    const trafficFlow = async () => {
+        if (map && map.showTrafficFlow && map.hideTrafficFlow) {
             if (trafficFlowVisible) {
                 map.showTrafficFlow();
             } else {
                 map.hideTrafficFlow();
             }
+        } else {
+            //console.log("");
         }
-    }, [map, trafficFlowVisible]);
+    };
 
-    useEffect(() => {
-        if (map) {
+    const trafficIncidents = async () => {
+        if (map && map.showTrafficIncidents && map.hideTrafficIncidents) {
             if (trafficIncidentsVisible) {
                 map.showTrafficIncidents();
             } else {
                 map.hideTrafficIncidents();
             }
+        } else {
+            //console.log("");
         }
+    };
+
+    useEffect(() => {
+        trafficFlow();
+    }, [map, trafficFlowVisible]);
+
+    useEffect(() => {
+        trafficIncidents();
     }, [map, trafficIncidentsVisible]);
-    const [searches, setSearches] = useState([]);
 
     useEffect(() => {
         const savedSearches = localStorage.getItem('rutt');
