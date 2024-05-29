@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
@@ -9,6 +9,14 @@ const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
     const [startLocation, setStartLocation] = useState('');
     const [endLocation, setEndLocation] = useState('');
+    const [searches, setSearches] = useState([]);
+
+    useEffect(() => {
+        const savedSearches = localStorage.getItem('rutt');
+        if (savedSearches) {
+            setSearches(JSON.parse(savedSearches));
+        }
+    }, []);
 
     // Lägger till markörer i form av flaggor på kartan.
     const addMarker = (lngLat) => {
@@ -31,11 +39,23 @@ const MapTest = ({ map }) => {
         });
     };
 
+    const saveSearch = (startLocation, endLocation) => {
+        const routeLabel = `${startLocation}-${endLocation}`;
+        const newSearch = { start: startLocation, end: endLocation, label: routeLabel };
+        const exists = searches.some(search => search.label === routeLabel);
+
+        if (!exists) {
+            const updatedSearches = [...searches, newSearch];
+            setSearches(updatedSearches);
+            localStorage.setItem('rutt', JSON.stringify(updatedSearches));
+        }
+    }
+
     // TomTom:s route funktion som söker efter 2 angivna ställen och skapar en route till användaren.
-    const createRoute = async () => {
+    const createRoute = async (startLoc = startLocation, endLoc = endLocation) => {
         try {
-            const startCoordinates = await routeSearch(startLocation);
-            const endCoordinates = await routeSearch(endLocation);
+            const startCoordinates = await routeSearch(startLoc);
+            const endCoordinates = await routeSearch(endLoc);
 
             markers.forEach(marker => marker.remove());
             setMarkers([]);
@@ -77,14 +97,14 @@ const MapTest = ({ map }) => {
                     padding: 50,
                     maxZoom: 14,
                 });
-
+                saveSearch(startLoc, endLoc);
             });
         } catch (error) {
             console.error("Error creating route:", error);
         }
     };
 
-    // Knapp som gör att man kan ta bort markörerna (tömmer listan).
+    // funktion som gör att man kan ta bort markörerna (tömmer listan).
     const clear = () => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
@@ -93,12 +113,18 @@ const MapTest = ({ map }) => {
         setEndLocation('');
     };
 
-    // Knapp som gör att man kan ta bort rutten (tömmer listan).
+    // funktion som gör att man kan ta bort rutten (tömmer listan).
     const removeRoute = (id) => {
         if (map.getLayer(id)) {
             map.removeLayer(id);
             map.removeSource(id);
         }
+    };
+
+    const handleSelectedRoute = (start, end) => {
+        setStartLocation(start);
+        setEndLocation(end);
+        createRoute(start, end);
     };
 
     // Returnerar alla värde i form av utskrift.
@@ -135,6 +161,14 @@ const MapTest = ({ map }) => {
                 >
                     Rensa
                 </button>
+                <h3>Tidigare "ruttor":</h3>
+                <ul>
+                    {searches.map((search, index) => (
+                        <li className="recentroute" key={index} onClick={() =>
+                            handleSelectedRoute(search.start, search.end)
+                        }>{search.label}</li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
