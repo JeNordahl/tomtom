@@ -31,6 +31,14 @@ const MapTest = ({ map }) => {
             }
         }
     }, [map, trafficIncidentsVisible]);
+    const [searches, setSearches] = useState([]);
+
+    useEffect(() => {
+        const savedSearches = localStorage.getItem('rutt');
+        if (savedSearches) {
+            setSearches(JSON.parse(savedSearches));
+        }
+    }, []);
 
     // Lägger till markörer i form av flaggor på kartan.
     const addMarker = (lngLat) => {
@@ -39,7 +47,7 @@ const MapTest = ({ map }) => {
     };
 
     // Tar fram resultatet från sökfälten och söker genom TomTom:s "fuzzysearch".
-    const routeSearch = (query) => {
+    const routeSearch = async (query) => {
         return ttServices.services.fuzzySearch({
             key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
             query: query,
@@ -48,16 +56,40 @@ const MapTest = ({ map }) => {
             if (results.length > 0) {
                 return results[0].position;
             } else {
-                throw new Error(`No results found for query "${query}"`);
+                alert(`Inga resultat hittades för ${query}`)
+                return;
             }
         });
     };
 
+    const saveSearch = (startLocation, endLocation) => {
+        const routeLabel = `${startLocation}-${endLocation}`;
+        const newSearch = { start: startLocation, end: endLocation, label: routeLabel };
+        const exists = searches.some(search => search.label === routeLabel);
+
+        if (!exists) {
+            const updatedSearches = [...searches, newSearch];
+            setSearches(updatedSearches);
+            localStorage.setItem('rutt', JSON.stringify(updatedSearches));
+        }
+    }
+
     // TomTom:s route funktion som söker efter 2 angivna ställen och skapar en route till användaren.
-    const createRoute = async () => {
+    const createRoute = async (startLoc = startLocation, endLoc = endLocation) => {
         try {
-            const startCoordinates = await routeSearch(startLocation);
-            const endCoordinates = await routeSearch(endLocation);
+            if (!startLoc || !endLoc) {
+                alert("Vänligen fyll i både start och slut destination för din rutt.")
+                return;
+            }
+            const startCoordinates = await routeSearch(startLoc);
+            const endCoordinates = await routeSearch(endLoc);
+
+            
+
+            if (markers.length > 0) {
+                alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning.")
+                return;
+            }
 
             markers.forEach(marker => marker.remove());
             setMarkers([]);
@@ -99,28 +131,36 @@ const MapTest = ({ map }) => {
                     padding: 50,
                     maxZoom: 14,
                 });
-
+                saveSearch(startLoc, endLoc);
             });
         } catch (error) {
             console.error("Error creating route:", error);
+            alert("Fel när rutten skulle skapas.")
+            return;
         }
     };
 
-    // Knapp som gör att man kan ta bort markörerna (tömmer listan).
+    // funktion som gör att man kan ta bort markörerna (tömmer listan).
     const clear = () => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
         removeRoute('route');
-        setStartLocation('');  
-        setEndLocation('');    
+        setStartLocation('');
+        setEndLocation('');
     };
 
-    // Knapp som gör att man kan ta bort rutten (tömmer listan).
+    // funktion som gör att man kan ta bort rutten (tömmer listan).
     const removeRoute = (id) => {
         if (map && map.getLayer(id)) {
             map.removeLayer(id);
             map.removeSource(id);
         }
+    };
+
+    const handleSelectedRoute = (start, end) => {
+        setStartLocation(start);
+        setEndLocation(end);
+        createRoute(start, end);
     };
 
     // Returnerar alla värde i form av utskrift.
@@ -173,6 +213,14 @@ const MapTest = ({ map }) => {
                     />
                     Trafikolyckor
                 </label>
+                <h3>Tidigare "ruttor":</h3>
+                <ul>
+                    {searches.map((search, index) => (
+                        <li className="recentroute" key={index} onClick={() =>
+                            handleSelectedRoute(search.start, search.end)
+                        }>{search.label}</li>
+                    ))}
+                </ul>
             </div>
         </div>
     );

@@ -22,7 +22,9 @@ const Button = ({ map }) => {
                 zoom: 14,
             });
         } else {
-            console.error("Map instance is not available");
+            alert("Kartan kunde inte hittas.")
+            return;
+            //console.error("Map instance is not available");
         }
     };
 
@@ -31,7 +33,9 @@ const Button = ({ map }) => {
         if (result.results && result.results.length > 0) {
             moveMap(result.results[0].position);
         } else {
-            console.log("No results found");
+            alert("Inga resultat hittades.")
+            return;
+            //console.log("No results found");
         }
     };
 
@@ -49,7 +53,9 @@ const Button = ({ map }) => {
                 saveSearch(query);
             }).catch(err => console.error("Error with fuzzySearch:", err));
         } else {
-            console.error("Search query is empty");
+            alert("Sökfältet är tomt.")
+            return;
+            //console.error("Search query is empty");
         }
     };
 
@@ -76,7 +82,7 @@ const Button = ({ map }) => {
                 <h3>Tidigare sökningar:</h3>
                 <ul>
                     {searches.map((search, index) => (
-                        <li class="recentsearch" key={index} onClick={() => handleSelectSearch(search)}>
+                        <li className="recentsearch" key={index} onClick={() => handleSelectSearch(search)}>
                             {search}
                         </li>
                     ))}
