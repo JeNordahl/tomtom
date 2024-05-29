@@ -57,6 +57,11 @@ const MapTest = ({ map }) => {
             const startCoordinates = await routeSearch(startLoc);
             const endCoordinates = await routeSearch(endLoc);
 
+            if (markers.length > 0) {
+                alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning")
+                return;
+            }
+
             markers.forEach(marker => marker.remove());
             setMarkers([]);
 
