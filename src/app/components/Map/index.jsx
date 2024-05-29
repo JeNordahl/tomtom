@@ -17,7 +17,7 @@ const MapTest = ({ map }) => {
     };
 
     // Tar fram resultatet från sökfälten och söker genom TomTom:s "fuzzysearch".
-    const routeSearch = (query) => {
+    const routeSearch = async (query) => {
         return ttServices.services.fuzzySearch({
             key: 'AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU',
             query: query,
@@ -89,8 +89,8 @@ const MapTest = ({ map }) => {
         markers.forEach(marker => marker.remove());
         setMarkers([]);
         removeRoute('route');
-        setStartLocation('');  
-        setEndLocation('');    
+        setStartLocation('');
+        setEndLocation('');
     };
 
     // Knapp som gör att man kan ta bort rutten (tömmer listan).

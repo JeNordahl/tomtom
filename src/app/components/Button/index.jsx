@@ -76,7 +76,7 @@ const Button = ({ map }) => {
                 <h3>Tidigare sökningar:</h3>
                 <ul>
                     {searches.map((search, index) => (
-                        <li class="recentsearch" key={index} onClick={() => handleSelectSearch(search)}>
+                        <li className="recentsearch" key={index} onClick={() => handleSelectSearch(search)}>
                             {search}
                         </li>
                     ))}
