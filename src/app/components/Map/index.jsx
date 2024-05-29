@@ -34,7 +34,8 @@ const MapTest = ({ map }) => {
             if (results.length > 0) {
                 return results[0].position;
             } else {
-                throw new Error(`No results found for query "${query}"`);
+                alert(`Inga resultat hittades för ${query}`)
+                return;
             }
         });
     };
@@ -54,11 +55,17 @@ const MapTest = ({ map }) => {
     // TomTom:s route funktion som söker efter 2 angivna ställen och skapar en route till användaren.
     const createRoute = async (startLoc = startLocation, endLoc = endLocation) => {
         try {
+            if (!startLoc || !endLoc) {
+                alert("Vänligen fyll i både start och slut destination för din rutt.")
+                return;
+            }
             const startCoordinates = await routeSearch(startLoc);
             const endCoordinates = await routeSearch(endLoc);
 
+            
+
             if (markers.length > 0) {
-                alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning")
+                alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning.")
                 return;
             }
 
@@ -106,6 +113,8 @@ const MapTest = ({ map }) => {
             });
         } catch (error) {
             console.error("Error creating route:", error);
+            alert("Fel när rutten skulle skapas.")
+            return;
         }
     };
 
