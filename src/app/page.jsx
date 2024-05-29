@@ -35,13 +35,19 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div>
+        <div className="main-container">
             <div ref={mapElement} id="map"></div>
-            <div className="container">
-                <h1>Where am I?</h1>
-                <input placeholder="Sök stad..." id="searchfunction" />
-                <Button map={map.current} />
-                {mapReady && <MapTest map={map.current} />}
+            <div className="overlay">
+                <div className="search-container">
+                    <h1>Where am I?</h1>
+                    <input placeholder="Sök stad..." id="searchfunction" />
+                    <Button map={map.current} />
+                </div>
+                <div className="recent-searches">
+                    {mapReady && <MapTest map={map.current} />}
+                    
+
+                </div>
             </div>
         </div>
     );

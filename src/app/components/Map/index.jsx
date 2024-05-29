@@ -84,7 +84,7 @@ const MapTest = ({ map }) => {
             const startCoordinates = await routeSearch(startLoc);
             const endCoordinates = await routeSearch(endLoc);
 
-            
+
 
             if (markers.length > 0) {
                 alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning.")
@@ -166,63 +166,66 @@ const MapTest = ({ map }) => {
     // Returnerar alla värde i form av utskrift.
     return (
         <div>
-            <div>
-                <input
+            <div id="inputs">
+                <input id="starttext"
                     type="text"
                     placeholder="Start..."
                     value={startLocation}
                     onChange={(e) => setStartLocation(e.target.value)}
                 />
-                <input
+                <input id="endtext"
                     type="text"
                     placeholder="Slut..."
                     value={endLocation}
                     onChange={(e) => setEndLocation(e.target.value)}
                 />
-                <button
-                    className="btn"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        createRoute();
-                    }}
-                >
-                    Skapa rutt
-                </button>
-                <button
-                    className="btn"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        clear();
-                    }}
-                >
-                    Rensa
-                </button>
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={trafficFlowVisible}
-                        onChange={(e) => setTrafficFlowVisible(e.target.checked)}
-                    />
-                    Trafikflöde
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        checked={trafficIncidentsVisible}
-                        onChange={(e) => setTrafficIncidentsVisible(e.target.checked)}
-                    />
-                    Trafikolyckor
-                </label>
-                <h3>Tidigare "ruttor":</h3>
-                <ul>
-                    {searches.map((search, index) => (
-                        <li className="recentroute" key={index} onClick={() =>
-                            handleSelectedRoute(search.start, search.end)
-                        }>{search.label}</li>
-                    ))}
-                </ul>
+                <div className="routesdiv">
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            createRoute();
+                        }}
+                    >
+                        Skapa rutt
+                    </button>
+                    <button
+                        className="btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            clear();
+                        }}
+                    >
+                        Rensa
+                    </button>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={trafficFlowVisible}
+                            onChange={(e) => setTrafficFlowVisible(e.target.checked)}
+                        />
+                        Trafikflöde
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            checked={trafficIncidentsVisible}
+                            onChange={(e) => setTrafficIncidentsVisible(e.target.checked)}
+                        />
+                        Trafikolyckor
+                    </label>
+                </div>
             </div>
-        </div>
+            <h3>Tidigare "ruttor":</h3>
+            <ul>
+                {searches.map((search, index) => (
+                    <li className="recentroute" key={index} onClick={() =>
+                        handleSelectedRoute(search.start, search.end)
+                    }>{search.label}</li>
+                ))}
+            </ul>
+
+        </div >
     );
 };
 
