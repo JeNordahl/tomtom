@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ttServices from '@tomtom-international/web-sdk-services';
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
@@ -9,6 +9,28 @@ const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
     const [startLocation, setStartLocation] = useState('');
     const [endLocation, setEndLocation] = useState('');
+    const [trafficFlowVisible, setTrafficFlowVisible] = useState(false);
+    const [trafficIncidentsVisible, setTrafficIncidentsVisible] = useState(false);
+
+    useEffect(() => {
+        if (map) {
+            if (trafficFlowVisible) {
+                map.showTrafficFlow();
+            } else {
+                map.hideTrafficFlow();
+            }
+        }
+    }, [map, trafficFlowVisible]);
+
+    useEffect(() => {
+        if (map) {
+            if (trafficIncidentsVisible) {
+                map.showTrafficIncidents();
+            } else {
+                map.hideTrafficIncidents();
+            }
+        }
+    }, [map, trafficIncidentsVisible]);
 
     // Lägger till markörer i form av flaggor på kartan.
     const addMarker = (lngLat) => {
@@ -95,7 +117,7 @@ const MapTest = ({ map }) => {
 
     // Knapp som gör att man kan ta bort rutten (tömmer listan).
     const removeRoute = (id) => {
-        if (map.getLayer(id)) {
+        if (map && map.getLayer(id)) {
             map.removeLayer(id);
             map.removeSource(id);
         }
@@ -135,6 +157,22 @@ const MapTest = ({ map }) => {
                 >
                     Rensa
                 </button>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={trafficFlowVisible}
+                        onChange={(e) => setTrafficFlowVisible(e.target.checked)}
+                    />
+                    Trafikflöde
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={trafficIncidentsVisible}
+                        onChange={(e) => setTrafficIncidentsVisible(e.target.checked)}
+                    />
+                    Trafikolyckor
+                </label>
             </div>
         </div>
     );
