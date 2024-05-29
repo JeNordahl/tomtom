@@ -228,7 +228,7 @@ const MapTest = ({ map }) => {
                     </label>
                 </div>
             </div>
-            <h3>Tidigare "ruttor":</h3>
+            <h3>Tidigare rutter:</h3>
             <ul>
                 {searches.map((search, index) => (
                     <li className="recentroute" key={index} onClick={() =>
