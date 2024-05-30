@@ -40,7 +40,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 En github repository om vår projekt för kursen Flerplattformsapplikationer med webteknik. VT-24. Malmö Universitet
 
-Av Hampus Persson, Jazper Nordahl och David Radic
+Av Hampus Persson, Jesper Nordahl och David Radic
 
 
 
@@ -53,3 +53,5 @@ Att börja lära sig ett nytt ramverk samtidigt som vi ska genomföra ett projek
 En annan viktig anledning till varför vi har valt React istället för andra ramverk är för att React erbjuder hög flexibilitet och skalbarhet. 
 Eftersom vi inte riktigt visste hur stort detta projektet skulle bli i slutändan så passade det bäst för oss. Dessutom så har många andra som använt
 TomTom också använt sig av React. Så de gångerna som vi fastnar på något eller behöver lära oss så finns det ett brett utbud för det.
+
+Vi har byggt en navigationsapplikation som tillåter användaren att söka på platser, städer addresser med mera och tar användaren dit. Användaren kan även skapa rutter (A-B) och visar den snabbaste vägen. Applikationen tillåter även användaren att se trafikflöde och trafikincidenter. 

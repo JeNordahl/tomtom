@@ -24,7 +24,6 @@ const Button = ({ map }) => {
         } else {
             alert("Kartan kunde inte hittas.")
             return;
-            //console.error("Map instance is not available");
         }
     };
 
@@ -35,7 +34,6 @@ const Button = ({ map }) => {
         } else {
             alert("Inga resultat hittades.")
             return;
-            //console.log("No results found");
         }
     };
 
@@ -55,7 +53,6 @@ const Button = ({ map }) => {
         } else {
             alert("Sökfältet är tomt.")
             return;
-            //console.error("Search query is empty");
         }
     };
 

@@ -6,13 +6,14 @@ import tt from '@tomtom-international/web-sdk-maps';
 import "./globals.css";
 import Button from "./components/Button";
 
+// Huvudfunktion till sidan.
 const HomePage = () => {
     const mapElement = useRef(null);
     const map = useRef(null);
     const [mapReady, setMapReady] = useState(false);
 
+    // Placerar ut kartan.
     useEffect(() => {
-
         map.current = tt.map({
             key: "AYZjZsp49t0NLJRpgZM77rW2VqGbKyfU",
             container: mapElement.current,
@@ -45,8 +46,6 @@ const HomePage = () => {
                 </div>
                 <div className="recent-searches">
                     {mapReady && <MapTest map={map.current} />}
-                    
-
                 </div>
             </div>
         </div>

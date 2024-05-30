@@ -37,29 +37,21 @@ body {
 
 .search-container,
 .recent-searches {
+    display: flex;
+    flex-direction: column;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
     pointer-events: auto;
-    max-width: 300px;
+    width: 300px;
+    text-align: center;
+    overflow-y: auto;
 }
 
 .routesdiv {
     display: flex;
     flex-direction: column;
-}
-
-.search-container {
-    width: 300px;
-    text-align: center;
-}
-
-.recent-searches {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    gap: 10px;
 }
 
 #inputs {
@@ -92,4 +84,52 @@ input {
 
 .btn:hover {
     background-color: #1279c2;
+}
+
+.recentsearch, .recentroute {
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    body {
+        display: flex
+    }
+
+    .search-container,
+    .recent-searches {
+        display: flex;
+        background: rgba(255, 255, 255, 0.9);
+        flex-direction: column;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        pointer-events: auto;
+        max-width: 30%;
+        font-size: small;
+    }
+    input {
+        display: flex;
+        text-align: center;
+        width: 85%;
+        flex-direction: column;
+    }
+    
+}
+
+@media (min-width: 701px) and (max-width: 1120px) {
+    body {
+        display: flex
+    }
+
+    .search-container,
+    .recent-searches {
+        display: flex;
+        background: rgba(255, 255, 255, 0.9);
+        flex-direction: column;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        pointer-events: auto;
+        max-width: 30%;
+    }
 }

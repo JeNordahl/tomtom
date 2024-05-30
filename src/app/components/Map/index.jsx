@@ -4,7 +4,7 @@ import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 
-// Huvudfunktionen för vår kära karta.
+// Huvudfunktionen för vår karta.
 const MapTest = ({ map }) => {
     const [markers, setMarkers] = useState([]);
     const [startLocation, setStartLocation] = useState('');
@@ -13,6 +13,7 @@ const MapTest = ({ map }) => {
     const [trafficIncidentsVisible, setTrafficIncidentsVisible] = useState(false);
     const [searches, setSearches] = useState([]);
 
+    // Funktion för trafikflöde 
     const trafficFlow = async () => {
         if (map && map.showTrafficFlow && map.hideTrafficFlow) {
             if (trafficFlowVisible) {
@@ -20,11 +21,10 @@ const MapTest = ({ map }) => {
             } else {
                 map.hideTrafficFlow();
             }
-        } else {
-            //console.log("");
         }
     };
-
+    
+    // Funktion för trafikhändelser 
     const trafficIncidents = async () => {
         if (map && map.showTrafficIncidents && map.hideTrafficIncidents) {
             if (trafficIncidentsVisible) {
@@ -32,8 +32,6 @@ const MapTest = ({ map }) => {
             } else {
                 map.hideTrafficIncidents();
             }
-        } else {
-            //console.log("");
         }
     };
 
@@ -45,6 +43,7 @@ const MapTest = ({ map }) => {
         trafficIncidents();
     }, [map, trafficIncidentsVisible]);
 
+    // Sparade rutter i localstorage
     useEffect(() => {
         const savedSearches = localStorage.getItem('rutt');
         if (savedSearches) {
@@ -74,6 +73,7 @@ const MapTest = ({ map }) => {
         });
     };
 
+    // Sparar rutten
     const saveSearch = (startLocation, endLocation) => {
         const routeLabel = `${startLocation}-${endLocation}`;
         const newSearch = { start: startLocation, end: endLocation, label: routeLabel };
@@ -95,8 +95,6 @@ const MapTest = ({ map }) => {
             }
             const startCoordinates = await routeSearch(startLoc);
             const endCoordinates = await routeSearch(endLoc);
-
-
 
             if (markers.length > 0) {
                 alert("Vänligen ta bort din tidigare rutt innan du gör en ny sökning.")
@@ -224,7 +222,7 @@ const MapTest = ({ map }) => {
                             checked={trafficIncidentsVisible}
                             onChange={(e) => setTrafficIncidentsVisible(e.target.checked)}
                         />
-                        Trafikolyckor
+                        Trafikhändelser
                     </label>
                 </div>
             </div>
